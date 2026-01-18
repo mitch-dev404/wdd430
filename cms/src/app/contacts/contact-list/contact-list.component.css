@@ -1,11 +1,11 @@
 .panel-heading {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: lightgray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightgray;
 }
 
 .panel-heading .text-primary {
-    font-weight: bold;
+  font-weight: bold;
 }

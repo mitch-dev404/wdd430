@@ -18,14 +18,7 @@ export class ContactListComponent implements OnInit {
       'images/jacksonk.jpg',
       null,
     ),
-    new Contact(
-      '2',
-      'Rex Barzee',
-      'barzeer@byui.edu',
-      '208-496-3768',
-      'images/barzeer.jpg',
-      null,
-    ),
+    new Contact('2', 'Rex Barzee', 'barzeer@byui.edu', '208-496-3768', 'images/barzeer.jpg', null),
   ];
 
   constructor() {}
