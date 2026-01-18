@@ -13,14 +13,10 @@ import { ContactDetailComponent } from './contacts/contact-detail/contact-detail
     HeaderComponent,
     ContactsComponent,
     ContactListComponent,
-    ContactDetailComponent
+    ContactDetailComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-  ],
-  bootstrap: [App]
+  imports: [BrowserModule],
+  providers: [provideBrowserGlobalErrorListeners()],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
