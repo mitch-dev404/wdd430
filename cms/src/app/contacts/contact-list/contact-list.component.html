@@ -3,5 +3,23 @@
     <h3 class="text-primary">Contacts</h3>
     <a href="#" class="btn btn-success">New Contact</a>
   </div>
-  <div class="panel-body"></div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <a href="#" class="list-group-item clearfix" *ngFor="let contact of contacts">
+          <div class="pull-lefft">
+            <h4 class="list-group-item-heading">{{ contact.name }}</h4>
+          </div>
+          <div class="pull-right">
+            <img
+            src="{{ contact.imageUrl }}"
+            alt="{{ contact.name }}"
+            class="img-responsive"
+            style="max-height: 50px;"
+            >
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
