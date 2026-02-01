@@ -11,5 +11,7 @@ import { Document } from '../document.model';
 export class DocumentDetailComponent implements OnInit {
   @Input() document: Document;
 
+  constructor() {}
+
   ngOnInit(): void {}
 }
