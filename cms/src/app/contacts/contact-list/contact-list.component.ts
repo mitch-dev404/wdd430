@@ -10,17 +10,17 @@ import { ContactService } from '../contact.service';
   styleUrl: './contact-list.component.css',
 })
 export class ContactListComponent implements OnInit {
-  @Output() selectedContactEvent = new EventEmitter<Contact>();
+  // @Output() selectedContactEvent = new EventEmitter<Contact>();
 
-  contacts: Contact[] = []
+  contacts: Contact[] = [];
 
   constructor(private contactService: ContactService) {}
 
   ngOnInit() {
-    this.contacts = this.contactService.getContacts()
+    this.contacts = this.contactService.getContacts();
   }
 
   onSelected(contact: Contact) {
-    this.selectedContactEvent.emit(contact);
+    this.contactService.contactSelectedEvent.emit(contact);
   }
 }
