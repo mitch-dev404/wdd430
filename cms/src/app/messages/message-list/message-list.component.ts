@@ -12,13 +12,16 @@ import { MessageService } from '../message.service';
 export class MessageListComponent implements OnInit {
   messages: Message[] = [];
 
-  constructor(private messageService: MessageService) {}
+  constructor(private msgService: MessageService) {}
 
   ngOnInit() {
-    this.messages = this.messageService.getMessages();
+    this.messages = this.msgService.getMessages();
+    this.msgService.messageChangedEvent.subscribe((messages: Message[]) => {
+      this.messages = messages;
+    });
   }
 
-  onAddMessage(message: Message){
+  onAddMessage(message: Message) {
     this.messages.push(message);
-  };
+  }
 }
