@@ -8,7 +8,7 @@ import { DocumentService } from './document.service';
   standalone: false,
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.css',
-  providers: [DocumentService],
+  // providers: [DocumentService],
 })
 export class DocumentsComponent implements OnInit {
   selectedDocument: Document;
