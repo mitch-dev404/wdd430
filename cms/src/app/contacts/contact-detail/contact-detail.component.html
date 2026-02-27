@@ -10,7 +10,7 @@
       />
       <div class="btn-box">
         <a href="#" class="btn btn-primary" [routerLink]="['/contacts', contact.id, 'edit']">Edit</a>
-        <a href="Delete" class="btn btn-danger">Delete</a>
+        <a class="btn btn-danger" (click)="onDelete()">Delete</a>
       </div>
     </div>
   </div>
