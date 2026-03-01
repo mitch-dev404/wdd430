@@ -12,6 +12,7 @@ import { DocumentService } from '../document.service';
 })
 export class DocumentListComponent implements OnInit {
   documents: Document[] = [];
+  private docListChangeSub: Subscription;
 
   constructor(private documentService: DocumentService) {}
 
