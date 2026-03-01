@@ -10,7 +10,7 @@ import { DocumentService } from '../document.service';
   templateUrl: './document-list.component.html',
   styleUrl: './document-list.component.css',
 })
-export class DocumentListComponent implements OnInit {
+export class DocumentListComponent implements OnInit, OnDestroy {
   documents: Document[] = [];
   private docListChangeSub: Subscription;
 
@@ -29,5 +29,9 @@ export class DocumentListComponent implements OnInit {
       (documentsList: Document[]) => {
       this.documents = documentsList;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.docListChangeSub.unsubscribe();
   }
 }
