@@ -27,4 +27,8 @@ export class ContactListComponent implements OnInit {
       },
     );
   }
+
+  ngOnDestroy(): void {
+    this.contactListChangeSub.unsubscribe();
+  }
 }
