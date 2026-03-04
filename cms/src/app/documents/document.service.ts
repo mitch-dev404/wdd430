@@ -11,12 +11,13 @@ export class DocumentService {
   documentSelectedEvent = new EventEmitter<Document>();
   documentChangedEvent = new EventEmitter<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
-  
+  maxDocumentId: number;
 
   documents: Document[] = [];
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
+    this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments() {
@@ -44,4 +45,22 @@ export class DocumentService {
 
     this.documentChangedEvent.emit(this.documents.slice());
   }
+
+  getMaxId(): number {
+    let maxId = 0;
+    this.documents.forEach((document) => {
+      const currentId = parseInt(document.id);
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
+    });
+    return maxId;
+  }
+
+
+
+
+
+
+
 }
