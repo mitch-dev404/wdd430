@@ -48,7 +48,7 @@
             required
             #url="ngModel"
           />
-          <div class="alert alert-danger" *ngIf="name.invalid || url.invalid">
+          <div class="alert alert-danger" *ngIf="(!name.valid  && !name.touched) || (!url.valid  && !url.touched)">
             The Document Title and Document URL are required fields.
           </div>
         </div>
