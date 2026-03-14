@@ -29,7 +29,7 @@ export class DocumentService {
     });
     this.http.get<Document[]>(this.baseUrl + '/documents.json', { headers: headers }).subscribe(
       (documents: Document[]) => {
-        console.log("fetching documents:", documents)
+        console.log('fetching documents:', documents);
         this.documents = documents;
         this.maxDocumentId = this.getMaxId();
         this.documents.sort((a: Document, b: Document) => a.id.localeCompare(b.id));
@@ -68,8 +68,7 @@ export class DocumentService {
     this.maxDocumentId++;
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -89,8 +88,7 @@ export class DocumentService {
 
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   deleteDocument(document: Document) {
@@ -102,7 +100,16 @@ export class DocumentService {
       return;
     }
     this.documents.splice(pos, 1);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
+  }
+
+  storeDocuments() {
+    JSON.stringify(this.documents);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    this.http.put(this.baseUrl + '/documents.json', this.documents, { headers }).subscribe(() => {
+      this.documentChangedEvent.next(this.documents.slice());
+    });
   }
 }
