@@ -13,6 +13,11 @@ import { ContactService } from '../contact.service';
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
   private contactListChangeSub: Subscription;
+  term: string;
+
+  search(value: string) {
+    this.term = value;
+  }
 
   constructor(private contactService: ContactService) {}
 
