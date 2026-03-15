@@ -1,7 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
+import { Subject } from 'rxjs';
+// import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { Document } from './document.model';
 
 @Injectable({
@@ -15,13 +16,28 @@ export class DocumentService {
 
   documents: Document[] = [];
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
+  baseUrl = 'https://wdd430-4f6c3-default-rtdb.firebaseio.com/';
+
+  constructor(private http: HttpClient) {
+    // this.documents = MOCKDOCUMENTS;
     this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments() {
-    return this.documents.slice();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    this.http.get<Document[]>(this.baseUrl + '/documents.json', { headers: headers }).subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+        this.maxDocumentId = this.getMaxId();
+        this.documents.sort((a: Document, b: Document) => a.id.localeCompare(b.id));
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      (error: any) => {
+        console.error(error);
+      },
+    );
   }
 
   getDocument(id: string): Document {
@@ -51,8 +67,7 @@ export class DocumentService {
     this.maxDocumentId++;
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -72,8 +87,7 @@ export class DocumentService {
 
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   deleteDocument(document: Document) {
@@ -85,7 +99,16 @@ export class DocumentService {
       return;
     }
     this.documents.splice(pos, 1);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
+  }
+
+  storeDocuments() {
+    JSON.stringify(this.documents);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    this.http.put(this.baseUrl + '/documents.json', this.documents, { headers }).subscribe(() => {
+      this.documentChangedEvent.next(this.documents.slice());
+    });
   }
 }
