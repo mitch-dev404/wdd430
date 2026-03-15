@@ -10,7 +10,7 @@ import { ContactService } from '../contact.service';
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css',
 })
-export class ContactListComponent implements OnInit {
+export class ContactListComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
   private contactListChangeSub: Subscription;
   term: string;
@@ -22,15 +22,17 @@ export class ContactListComponent implements OnInit {
   constructor(private contactService: ContactService) {}
 
   ngOnInit() {
-    this.contacts = this.contactService.getContacts();
-    this.contactService.contactChangedEvent.subscribe((contacts: Contact[]) => {
-      this.contacts = contacts;
-    });
     this.contactListChangeSub = this.contactService.contactListChangedEvent.subscribe(
-      (contactList: Contact[]) => {
-        this.contacts = contactList;
-      },
-    );
+          (contactsList: Contact[]) => {
+            this.contacts = contactsList;
+          },
+        );
+        this.contactService.getContacts();
+    
+        this.contactService.contactChangedEvent.subscribe((contactsList: Contact[]) => {
+          this.contacts = contactsList;
+          console.log(contactsList)
+        });
   }
 
   ngOnDestroy(): void {

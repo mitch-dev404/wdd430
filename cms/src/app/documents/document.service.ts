@@ -29,7 +29,6 @@ export class DocumentService {
     });
     this.http.get<Document[]>(this.baseUrl + '/documents.json', { headers: headers }).subscribe(
       (documents: Document[]) => {
-        console.log('fetching documents:', documents);
         this.documents = documents;
         this.maxDocumentId = this.getMaxId();
         this.documents.sort((a: Document, b: Document) => a.id.localeCompare(b.id));
